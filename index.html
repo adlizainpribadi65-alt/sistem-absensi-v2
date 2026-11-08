@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reegioella The Shoes | Dashboard Analytics Kehadiran</title>
+    
+    <!-- Meta SEO -->
+    <meta name="description" content="Sistem manajemen kehadiran eksklusif untuk industri alas kaki Reegioella The Shoes.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons & Charts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <i data-lucide="footprints" class="logo-pulse"></i>
+                    <span>Reegioella</span>
+                </div>
+                <button class="menu-toggle"><i data-lucide="chevron-left"></i></button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">UTAMA</div>
+                <a href="#" class="nav-link active" data-view="dashboard">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Ringkasan</span>
+                </a>
+                <a href="#" class="nav-link" data-view="log">
+                    <i data-lucide="clipboard-list"></i>
+                    <span>Log Kehadiran</span>
+                </a>
+                <a href="#" class="nav-link" data-view="employees">
+                    <i data-lucide="users-2"></i>
+                    <span>Data Karyawan</span>
+                </a>
+                
+                <div class="nav-section"> ANALISIS</div>
+                <a href="#" class="nav-link" data-view="reports">
+                    <i data-lucide="bar-chart-big"></i>
+                    <span>Laporan Kinerja</span>
+                </a>
+                <a href="#" class="nav-link" data-view="shifts">
+                    <i data-lucide="calendar-range"></i>
+                    <span>Jadwal Shift</span>
+                </a>
+                
+                <div class="nav-section">SISTEM</div>
+                <a href="#" class="nav-link" data-view="settings">
+                    <i data-lucide="settings-2"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Admin" alt="Admin">
+                    </div>
+                    <div class="profile-details">
+                        <span class="p-name">Budi Santoso</span>
+                        <span class="p-role">Administrator</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-wrapper">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="page-title">Dashboard Operasional</h1>
+                    <p id="page-subtitle">Selamat datang kembali, berikut status hari ini.</p>
+                </div>
+                
+                <div class="header-right">
+                    <div class="real-time-stats">
+                        <div class="rt-item">
+                            <span class="rt-label">Waktu</span>
+                            <span class="rt-value" id="live-clock">00:00:00</span>
+                        </div>
+                        <div class="rt-divider"></div>
+                        <div class="rt-item">
+                            <span class="rt-label">Tanggal</span>
+                            <span class="rt-value" id="live-date">10 April 2026</span>
+                        </div>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <div class="search-input">
+                            <i data-lucide="search"></i>
+                            <input type="text" placeholder="Cari ID atau Nama...">
+                        </div>
+                        <button class="action-btn icon-only">
+                            <i data-lucide="bell"></i>
+                            <span class="btn-badge">4</span>
+                        </button>
+                        <button class="action-btn btn-primary">
+                            <i data-lucide="plus-circle"></i>
+                            <span>Input Manual</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-container" id="app-container">
+                <!-- Dashboard View (Default) -->
+                <section class="view active" id="dashboard-view">
+                    <!-- KPI Cards Grid -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-info">
+                                <span class="kpi-label">Total Karyawan</span>
+                                <h2 class="kpi-value" id="stat-total">1,420</h2>
+                                <span class="kpi-trend trend-up"><i data-lucide="trending-up"></i> +12 Bulan ini</span>
+                            </div>
+                            <div class="kpi-icon indigo"><i data-lucide="users"></i></div>
+                        </div>
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-info">
+                                <span class="kpi-label">Hadir Hari Ini</span>
+                                <h2 class="kpi-value" id="stat-present">1,385</h2>
+                                <div class="mini-progress"><div class="bar" style="width: 97%;"></div></div>
+                            </div>
+                            <div class="kpi-icon emerald"><i data-lucide="user-check"></i></div>
+                        </div>
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-info">
+                                <span class="kpi-label">Terlambat</span>
+                                <h2 class="kpi-value" id="stat-late">18</h2>
+                                <span class="kpi-trend trend-down"><i data-lucide="trending-down"></i> -5% dari Kemarin</span>
+                            </div>
+                            <div class="kpi-icon amber"><i data-lucide="clock"></i></div>
+                        </div>
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-info">
+                                <span class="kpi-label">Izin / Sakit</span>
+                                <h2 class="kpi-value" id="stat-absent">12</h2>
+                                <span class="kpi-sub">5 Menunggu Persetujuan</span>
+                            </div>
+                            <div class="kpi-icon rose"><i data-lucide="user-plus"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-main-grid">
+                        <!-- Left Column: Analytics -->
+                        <div class="analytics-section">
+                            <div class="chart-card glass-card">
+                                <div class="card-header">
+                                    <h3>Tren Kehadiran Mingguan</h3>
+                                    <div class="card-options">
+                                        <select>
+                                            <option>7 Hari Terakhir</option>
+                                            <option>30 Hari Terakhir</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="chart-body">
+                                    <canvas id="attendanceTrendChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="secondary-grid">
+                                <div class="glass-card table-card">
+                                    <div class="card-header">
+                                        <h3>Performa Departemen</h3>
+                                    </div>
+                                    <div class="table-compact">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Dept</th>
+                                                    <th>Hadir</th>
+                                                    <th>Score</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dept-scores-list">
+                                                <!-- Dynamic Content -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="glass-card status-card">
+                                    <div class="card-header">
+                                        <h3>Kapasitas Shift</h3>
+                                    </div>
+                                    <div class="shift-stats" id="shift-progress-list">
+                                        <!-- Dynamic Content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Live Feed -->
+                        <div class="feed-section">
+                            <div class="glass-card feed-card">
+                                <div class="card-header">
+                                    <h3>Aktivitas Real-time</h3>
+                                    <span class="live-indicator">LIVE</span>
+                                </div>
+                                <div class="feed-list" id="recent-activity-feed">
+                                    <!-- Dynamic Activity Items -->
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn-text">Lihat Semua History <i data-lucide="arrow-right"></i></button>
+                                </div>
+                            </div>
+                            
+                            <!-- Overtime Alert Info -->
+                            <div class="glass-card alert-card">
+                                <div class="alert-icon"><i data-lucide="alert-circle"></i></div>
+                                <div class="alert-content">
+                                    <h4>Peringatan Lembur</h4>
+                                    <p>8 Karyawan di Line 04 telah bekerja melebihi jam normal.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Placeholder for other views -->
+                <section class="view" id="log-view">
+                    <div class="glass-card full-page-card">
+                        <div class="card-header">
+                            <h2>Log Kehadiran Lengkap</h2>
+                            <div class="header-filters">
+                                <input type="date" class="form-control">
+                                <button class="btn btn-secondary"><i data-lucide="filter"></i> Filter</button>
+                                <button class="btn btn-emerald"><i data-lucide="download"></i> Export Excel</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="main-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Scan</th>
+                                        <th>Nama Karyawan</th>
+                                        <th>Departemen</th>
+                                        <th>Masuk</th>
+                                        <th>Keluar</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="full-log-body">
+                                    <!-- Dynamic Content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Background Decoration -->
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
